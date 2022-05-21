@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import xyz.itbs.szubreweryclient.web.model.BeerDTO;
+import xyz.itbs.szubreweryclient.web.model.CustomerDTO;
 
 import java.net.URI;
 import java.util.UUID;
@@ -35,6 +36,22 @@ public class BreweryClient {
     }
 
     public void deleteBeer(UUID uuid) {
+        restTemplate.delete(API_HOST_V1 + BEER_PATH_V1 + "/" + uuid);
+    }
+
+    public CustomerDTO getCustomerById(UUID uuid) {
+        return restTemplate.getForObject(API_HOST_V1 + BEER_PATH_V1 + uuid, CustomerDTO.class);
+    }
+
+    public URI saveNewCustomer(CustomerDTO customerDTO) {
+        return restTemplate.postForLocation(API_HOST_V1 + BEER_PATH_V1, customerDTO);
+    }
+
+    public void updateCustomer(UUID uuid, CustomerDTO customerDTO) {
+        restTemplate.put(API_HOST_V1 + BEER_PATH_V1 + "/" + uuid, customerDTO);
+    }
+
+    public void deleteCustomer(UUID uuid) {
         restTemplate.delete(API_HOST_V1 + BEER_PATH_V1 + "/" + uuid);
     }
 }
